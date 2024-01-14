@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#38b000</color>
     <color name="sky_blue">#a2d2ff</color>
+    <color name="toolbar">#ccd5ae</color>
+    <color name="main_background">#ffe5ec</color>
+    <color name="colorAccent">#7ae582</color>
 </resources>

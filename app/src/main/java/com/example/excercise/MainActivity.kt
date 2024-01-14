@@ -1,5 +1,6 @@
 package com.example.excercise
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -17,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
         //val frm_lyt :FrameLayout =findViewById(R.id.fl_start)
         binding?.flStart?.setOnClickListener {
-            Toast.makeText(this@MainActivity,"Here will start the exercise",
-                Toast.LENGTH_SHORT).show()
+            val intent=Intent(this,ExerciseActivity::class.java)
+            startActivity(intent)
         }
         }
     override fun onDestroy() {
