@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ExerciseActivity"
-    android:background="@drawable/background"
+    android:background="@color/white"
    >
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarExercise"
@@ -13,7 +13,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:theme="@style/Toolbartheme"
         app:titleTextColor="@color/black"
-        android:background="?attr/colorPrimary"
+        android:background="#90a955"
         app:title="7 minute workout"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -66,6 +66,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvTimer"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="10"
+                />
+        </LinearLayout>
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/exersise_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@drawable/item_circular_color_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarExercise"
+        >
+        <ProgressBar
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/progressbarExercise"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_gravity="center"
+            android:max="30"
+            android:progress="300"
+            android:rotation="-90"
+            android:progressDrawable="@drawable/circular_progress_gray"
+            android:background="@drawable/circular_progress_bar"
+            android:indeterminate="false"
+            />
+        <!--android progressDRawable is used to  customize the
+        visual representation of progresss bar,instead using default appearance-->
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/item_circular_accent_background"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTimerExercise"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold"
