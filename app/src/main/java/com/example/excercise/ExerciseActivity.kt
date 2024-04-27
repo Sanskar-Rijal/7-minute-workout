@@ -3,13 +3,17 @@ package com.example.excercise
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.size
 import com.example.excercise.databinding.ActivityExerciseBinding
+import org.w3c.dom.Text
+import java.util.Locale
 
-class ExerciseActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var binding: ActivityExerciseBinding? = null
     private var restTimer: CountDownTimer? = null
     private var restProgress = 0
@@ -17,6 +21,8 @@ class ExerciseActivity : AppCompatActivity() {
     private var erestProgress = 0
     private var Exerciselist:ArrayList<Exercisemodel>?=null
     private var currentExercisePosition=-1
+    //setting up text to speech
+    private var tts:TextToSpeech?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
@@ -27,6 +33,7 @@ class ExerciseActivity : AppCompatActivity() {
          */
         setContentView(binding?.root)
         setSupportActionBar(binding?.toolbarExercise)
+        tts= TextToSpeech(this,this)
         if (supportActionBar != null) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
@@ -37,27 +44,27 @@ class ExerciseActivity : AppCompatActivity() {
         }
         setupRestView()
     }
-private fun setupRestView()                                    
-{
-    binding?.flProgress?.visibility=View.VISIBLE
-    binding?.textviewTitle?.visibility=View.VISIBLE
-    binding?.tvExerciseName?.visibility=View.INVISIBLE
-    binding?.exersiseView?.visibility=View.INVISIBLE
-    binding?.ivimage?.visibility=View.INVISIBLE
-    binding?.tvupcomminglabel?.visibility=View.VISIBLE
-    binding?.tvupcommingexercisename?.visibility=View.VISIBLE
-    if (restTimer !=null) //checking if timer is already running or not, if its running then canceling it by making 0
+    private fun setupRestView()
     {
-        restTimer?.cancel()
-        restProgress=0
+        binding?.flProgress?.visibility=View.VISIBLE
+        binding?.textviewTitle?.visibility=View.VISIBLE
+        binding?.tvExerciseName?.visibility=View.INVISIBLE
+        binding?.exersiseView?.visibility=View.INVISIBLE
+        binding?.ivimage?.visibility=View.INVISIBLE
+        binding?.tvupcomminglabel?.visibility=View.VISIBLE
+        binding?.tvupcommingexercisename?.visibility=View.VISIBLE
+        if (restTimer !=null) //checking if timer is already running or not, if its running then canceling it by making 0
+        {
+            restTimer?.cancel()
+            restProgress=0
+        }
+        //binding?.flProgress?.visibility=View.INVISIBLE
+        /**
+         * now adding upcomming label and upcomming exercises
+         */
+        binding?.tvupcommingexercisename?.text=Exerciselist!![currentExercisePosition+1].getName()//currentExercise position is at -1 so if we don't do +1 app will crash
+        setRestProgressBar()
     }
-    //binding?.flProgress?.visibility=View.INVISIBLE
-    /**
-     * now adding upcomming label and upcomming exercises
-     */
-    binding?.tvupcommingexercisename?.text=Exerciselist!![currentExercisePosition+1].getName()//currentExercise position is at -1 so if we don't do +1 app will crash
-    setRestProgressBar()
-}
     private fun setRestProgressBar() {
         binding?.progressbar?.progress = restProgress
         restTimer =
@@ -87,7 +94,7 @@ private fun setupRestView()
         binding?.ivimage?.visibility=View.VISIBLE
         binding?.tvupcomminglabel?.visibility=View.INVISIBLE
         binding?.tvupcommingexercisename?.visibility=View.INVISIBLE
-
+        speakOut("Exercise name is "+Exerciselist!![currentExercisePosition].getName())
         if(erestTimer !=null)
         {
             erestTimer?.cancel()
@@ -113,7 +120,7 @@ private fun setupRestView()
                 override fun onFinish() {
                     if(currentExercisePosition < Exerciselist?.size!!-1)
                     {
-                      setupRestView()
+                        setupRestView()
                     }
                     else
                     {
@@ -138,6 +145,29 @@ private fun setupRestView()
             erestTimer?.cancel()
             erestProgress=0
         }
+        if(tts !=null) {
+            tts?.shutdown()
+            tts?.stop()
+        }
         binding=null
     }
-}
+    private  fun speakOut(text:String) {
+        tts?.speak(text,TextToSpeech.QUEUE_FLUSH,null,"")
+    }
+
+    override fun onInit(status: Int) {
+        if(status == TextToSpeech.SUCCESS)
+        {
+            val result = tts!!.setLanguage(Locale.ENGLISH)
+            if(result == TextToSpeech.LANG_MISSING_DATA ||
+                result == TextToSpeech.LANG_NOT_SUPPORTED)
+            {
+                Log.e("TTS","The language specified is not supported")
+            }
+        }
+        else
+        {
+            Log.e("TTS","initialization failed")
+        }
+    }
+    }
