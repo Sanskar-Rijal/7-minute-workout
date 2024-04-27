@@ -13,7 +13,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:theme="@style/Toolbartheme"
         app:titleTextColor="@color/black"
-        android:background="#90a955"
+        android:background="@color/bar"
         app:title="7 minute workout"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -27,8 +27,9 @@
         android:textColor="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fl_progress"
+        app:layout_constraintBottom_toTopOf="@id/fl_progress"
         />
+
     <FrameLayout
         android:id="@+id/fl_progress"
         android:layout_width="100dp"
@@ -73,6 +74,32 @@
                 />
         </LinearLayout>
     </FrameLayout>
+    <ImageView
+        android:id="@+id/ivimage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_jumping_jacks"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/toolbarExercise"
+        app:layout_constraintBottom_toTopOf="@id/tvExerciseName"
+
+
+        />
+    <TextView
+        android:id="@+id/tvExerciseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exercise Name"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivimage"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
     <FrameLayout
         android:id="@+id/exersise_view"
         android:layout_width="100dp"
@@ -84,7 +111,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarExercise"
+        app:layout_constraintTop_toBottomOf="@id/tvExerciseName"
         >
         <ProgressBar
             android:layout_width="100dp"
