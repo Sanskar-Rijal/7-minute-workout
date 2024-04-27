@@ -31,25 +31,31 @@ class ExerciseActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         Exerciselist=constants.defaultExerciseList()
-        binding?.toolbarExercise?.title = "7 Minute workout"
+        binding?.toolbarExercise?.title = "7 minute Workout"
         binding?.toolbarExercise?.setNavigationOnClickListener {
             onBackPressed()
         }
         setupRestView()
     }
-private fun setupRestView()
+private fun setupRestView()                                    
 {
     binding?.flProgress?.visibility=View.VISIBLE
     binding?.textviewTitle?.visibility=View.VISIBLE
     binding?.tvExerciseName?.visibility=View.INVISIBLE
     binding?.exersiseView?.visibility=View.INVISIBLE
     binding?.ivimage?.visibility=View.INVISIBLE
+    binding?.tvupcomminglabel?.visibility=View.VISIBLE
+    binding?.tvupcommingexercisename?.visibility=View.VISIBLE
     if (restTimer !=null) //checking if timer is already running or not, if its running then canceling it by making 0
     {
         restTimer?.cancel()
         restProgress=0
     }
     //binding?.flProgress?.visibility=View.INVISIBLE
+    /**
+     * now adding upcomming label and upcomming exercises
+     */
+    binding?.tvupcommingexercisename?.text=Exerciselist!![currentExercisePosition+1].getName()//currentExercise position is at -1 so if we don't do +1 app will crash
     setRestProgressBar()
 }
     private fun setRestProgressBar() {
@@ -79,6 +85,9 @@ private fun setupRestView()
         binding?.tvExerciseName?.visibility=View.VISIBLE
         binding?.exersiseView?.visibility=View.VISIBLE
         binding?.ivimage?.visibility=View.VISIBLE
+        binding?.tvupcomminglabel?.visibility=View.INVISIBLE
+        binding?.tvupcommingexercisename?.visibility=View.INVISIBLE
+
         if(erestTimer !=null)
         {
             erestTimer?.cancel()
