@@ -1,8 +1,12 @@
 package com.example.excercise
 
+import android.content.Context
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.provider.MediaStore.Audio.Media
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +27,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var currentExercisePosition=-1
     //setting up text to speech
     private var tts:TextToSpeech?=null
+    //adding mediaplayer
+    private var player:MediaPlayer?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
@@ -46,6 +52,16 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
     private fun setupRestView()
     {
+        try {
+            val soundURI= Uri.parse(
+                "android.resource://com.example.excercise/"+R.raw.press_start)
+            player=MediaPlayer.create(applicationContext,soundURI)
+            player?.isLooping=false
+            player?.start()
+        }catch (e:Exception)
+        {
+            e.printStackTrace()
+        }
         binding?.flProgress?.visibility=View.VISIBLE
         binding?.textviewTitle?.visibility=View.VISIBLE
         binding?.tvExerciseName?.visibility=View.INVISIBLE
@@ -68,7 +84,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setRestProgressBar() {
         binding?.progressbar?.progress = restProgress
         restTimer =
-            object : CountDownTimer(5000, 1000)//millisinfuture matlab katin jel basnu paro timer
+            object : CountDownTimer(10000, 1000)//millisinfuture matlab katin jel basnu paro timer
             //1000 matlab harek tick matlab 1 sec ma onTick call hunxa
             {
                 override fun onTick(millisUntilFinished: Long) {
@@ -107,7 +123,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setExerciseProgressBar() {
         binding?.progressbar?.progress = erestProgress
         erestTimer =
-            object : CountDownTimer(5000, 1000)//millisinfuture matlab katin jel basnu paro timer
+            object : CountDownTimer(30000, 1000)//millisinfuture matlab katin jel basnu paro timer
             //1000 matlab harek tick matlab 1 sec ma onTick call hunxa
             {
                 override fun onTick(millisUntilFinished: Long) {
