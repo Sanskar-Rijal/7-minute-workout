@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.excercise.databinding.ActivityExerciseBinding
 import com.example.excercise.databinding.ItemExerciseStatusBinding
 
-class ExerciseStatusAdapter(val items:ArrayList<Exercisemodel>):
+class ExerciseStatusAdapter(val items:ArrayList<Exercisemodel>)://it need to always have list of item that it need to display
     RecyclerView.Adapter<ExerciseStatusAdapter.ViewHolder>()
 //we will make  viewholder an inner class
 {

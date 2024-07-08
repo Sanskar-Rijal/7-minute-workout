@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.size
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.excercise.databinding.ActivityExerciseBinding
 import org.w3c.dom.Text
 import java.util.Locale
@@ -31,8 +33,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var currentExercisePosition=-1
     //setting up text to speech
     private var tts:TextToSpeech?=null
-    //adding mediaplayer
-    private var player:MediaPlayer?=null
+    private var player:MediaPlayer?=null//adding mediaplayer
+
+    private var exerciseAdapter:ExerciseStatusAdapter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
@@ -53,6 +56,16 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             onBackPressed()
         }
         setupRestView()
+        setupExerciseStatusRecyclerView()
+        binding?.rvExerciseStatus?.adapter=exerciseAdapter
+    }
+    /**setting up recycler view status **/
+    private fun setupExerciseStatusRecyclerView()
+    {
+        binding?.rvExerciseStatus?.layoutManager= LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        //i don't want it to display in reverse order so false
+        exerciseAdapter = ExerciseStatusAdapter(Exerciselist!!)
+
     }
     private fun setupRestView()
     {
