@@ -19,11 +19,15 @@ import java.util.Locale
 
 class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var binding: ActivityExerciseBinding? = null
+
     private var restTimer: CountDownTimer? = null
     private var restProgress = 0
+
     private var erestTimer: CountDownTimer? = null
     private var erestProgress = 0
+
     private var Exerciselist:ArrayList<Exercisemodel>?=null
+
     private var currentExercisePosition=-1
     //setting up text to speech
     private var tts:TextToSpeech?=null
