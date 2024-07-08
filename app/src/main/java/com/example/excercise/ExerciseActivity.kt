@@ -165,6 +165,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             tts?.shutdown()
             tts?.stop()
         }
+        if(player !=null)
+        {
+            player?.stop()
+        }
         binding=null
     }
     private  fun speakOut(text:String) {
